@@ -1,0 +1,99 @@
+﻿@model kipas_Odev.Models.PersonelFormViewModel
+
+@{
+    ViewData["Title"] = "Personel Bilgileri";
+    var states = new List<string> { "Kahramanmaraş", "Gaziantep", "İstanbul", "Ankara", "İzmir", "Bursa" };
+}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Personel Bilgileri</h4>
+            <a asp-action="Index" class="btn-close" aria-label="Kapat"></a>
+        </div>
+
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="FirstName" class="form-label">İsim</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="LastName" class="form-label">Soyisim</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Title" class="form-label">Unvan</label>
+                    <input asp-for="Title" class="form-control" placeholder="Bay, Bayan, Dr." />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="BirthDate" class="form-label">Doğum Tarihi</label>
+                    <input asp-for="BirthDate" class="form-control" type="date" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Position" class="form-label">Pozisyon</label>
+                    <input asp-for="Position" class="form-control" />
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="HireDate" class="form-label">İşe Giriş Tarihi</label>
+                    <input asp-for="HireDate" class="form-control" type="date" />
+                    <span asp-validation-for="HireDate" class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Notes" class="form-label">Açıklama</label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <h5 class="mb-3">Adres Bilgileri</h5>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label asp-for="State" class="form-label">İl</label>
+                    <select asp-for="State" class="form-select">
+                        <option value="">Seçiniz...</option>
+                        @foreach (var s in states)
+                        {
+                            <option value="@s">@s</option>
+                        }
+                    </select>
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-8">
+                    <label asp-for="Address" class="form-label">Adres</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

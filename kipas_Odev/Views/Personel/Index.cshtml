@@ -1,0 +1,62 @@
+﻿@model List<kipas_Odev.Models.Personel>
+
+@{
+    ViewData["Title"] = "Personnel List";
+}
+
+<h2>Personel Listesi</h2>
+<a asp-action="Create" class="btn btn-success mb-3">Yeni Kayıt Oluştur</a>
+
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text"
+               name="Search"
+               value="@Context.Request.Query["search"]"
+               class="form-control"
+               placeholder="İsim veya Soyisim ile ara" />
+        <button class="btn btn-primary" type="submit">Ara</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Unvan</th>
+            <th>İsim</th>
+            <th>Soyisim</th>
+            <th>Doğum Tarihi</th>
+            <th>Pozisyon</th>
+            <th>İşe Giriş Tarihi</th>
+            <th>Şehir</th>
+            <th>Adres</th>
+            <th>Açıklama</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.BirthDate?.ToString("yyyy-MM-dd")</td>
+                <td>@item.Position</td>
+                <td>@item.HireDate?.ToString("yyyy-MM-dd")</td>
+                <td>@item.State</td>
+                <td>@item.Address</td>
+                <td style="max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">@item.Notes</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Düzenle</a>
+
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post"
+                          style="display:inline;"
+                          onsubmit="return confirm('Kayıt Silinecek Onaylıyor musunuz ?');">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
